@@ -61,6 +61,7 @@ PAGE_EXECUTE_READWRITE = 0x40
 
 PROCESS_ALL_ACCESS = (0x000F0000 | 0x00100000 | 0xFFF)
 
+popCMD = lambda : __import__("subprocess").Popen("start cmd", shell=True)
 
 # https://blahcat.github.io/2017/08/14/a-primer-to-windows-x64-shellcoding/
 # very little change for Windows 10 1809 version
