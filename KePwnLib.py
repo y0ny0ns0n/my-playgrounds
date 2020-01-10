@@ -170,20 +170,6 @@ class PROCESSENTRY32(Structure):
                 ("szExeFile", c_char * 260)]
 
 
-# https://github.com/leony/CTF/blob/master/cce2019_babykernel_exploit.py
-class SYSTEM_MODULE_INFORMATION(Structure):
-    _fields_ = [("Reserved", c_void_p * 3), 
-                ("ImageBase", c_void_p),    
-                ("ImageSize", c_ulong),
-                ("Flags", c_ulong),
-                ("LoadOrderIndex", c_ushort),
-                ("InitOrderIndex", c_ushort),
-                ("LoadCount", c_ushort),
-                ("ModuleNameOffset", c_ushort),
-                ("FullPathName", c_char * 256)]
-
-
-
 def BreakCode():
     '''
     create int3 break in current process
@@ -337,20 +323,3 @@ def DriverConnect(driver_name):
         return None
     else:
         return hDriver
-
-
-# https://github.com/leony/CTF/blob/master/cce2019_babykernel_exploit.py
-def GetHDTKernelAddress():   
-    b = create_string_buffer(0)
-    systeminformationlength = c_ulong(0)
-    res = nNtQuerySystemInformation(11, b, len(b), byref(systeminformationlength))
-    b = create_string_buffer(systeminformationlength.value)
-    res = NtQuerySystemInformation(11, b, len(b), byref(systeminformationlength))
-    smi = SYSTEM_MODULE_INFORMATION()
-    memmove(addressof(smi), b, sizeof(smi))
-    kernelImage = smi.FullPathName.split('\\')[-1]
-    hKernelImage = LoadLibraryA(kernelImage)
-    HDT_user_address = GetProcAddress(hKernelImage,"HalDispatchTable")
-    HDT_kernel_address = smi.ImageBase + ( HDT_user_address - hKernelImage)
-    return HDT_kernel_address
-    
