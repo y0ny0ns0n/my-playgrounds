@@ -113,7 +113,7 @@ def popa():
     
     return code
 
-def go_back_home():
+def return_0():
     code = ''
     code += "\x48\x31\xc0" # xor rax, rax
     code += "\xc3"         # ret
